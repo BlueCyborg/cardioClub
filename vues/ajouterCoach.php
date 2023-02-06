@@ -26,5 +26,6 @@ if (is_null(getUnCoach($idClub)) == true) {?>
 </form>
 <?php } else {?>
     <script>alert('Il y a déjà un coach dans le club');</script>
+    <meta http-equiv="refresh" content="0;URL=https://cardio-training.eu/wp-admin/admin.php?page=gestionClub&option=accueil">
 <?php exit();
 }?>

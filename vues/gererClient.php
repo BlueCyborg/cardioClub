@@ -17,8 +17,7 @@ if (isset($_POST['id_client'])) {?>
         </button>
     </form>
 <?php } else {
-    $clients = getClientClub($idClub);
-    var_dump($clients);?>
+    $clients = getClientClub($idClub);?>
     <p>Client à modifier :</p>
     <form action="https://cardio-training.eu/wp-admin/admin.php?page=gestionClub&option=gererClient" method="POST">
         <select name="id_client">
