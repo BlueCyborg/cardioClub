@@ -5,7 +5,7 @@ if (isset($_POST['id_client'])) {?>
     <form action="https://cardio-training.eu/wp-admin/admin.php?page=gestionClub&option=gererClient" method="POST">
         <?php $client = getUnClient($_POST["id_client"]);?>
         <p>
-            <strong>Client : <?=$client[0]->user_nicename?></strong><br><br>
+            <strong>Client : <?=htmlspecialchars($client[0]->user_nicename)?></strong><br><br>
             <input name="id_client" type="hidden" value="<?=$_POST["id_client"]?>">
 
             Pseuso : <input type='text' name='user_nicename' placeholder='User Login' value='<?=$client[0]->user_nicename?>' required>
@@ -17,13 +17,14 @@ if (isset($_POST['id_client'])) {?>
         </button>
     </form>
 <?php } else {
-    $clients = getClientClub($idClub);?>
+    $clients = getClientClub($idClub);
+    var_dump($clients);?>
     <p>Client à modifier :</p>
     <form action="https://cardio-training.eu/wp-admin/admin.php?page=gestionClub&option=gererClient" method="POST">
         <select name="id_client">
             <?php foreach ($clients as $unClient) {?>
                 <option value='<?=$unClient->ID?>'>
-                    <?=$unClient->user_nicename?>
+                    <?=htmlspecialchars($unClient->user_nicename)?>
                 </option>
             <?php }?>
         </select>

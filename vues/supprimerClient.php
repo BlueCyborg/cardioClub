@@ -6,7 +6,7 @@
         <select name="id_client">
             <?php foreach ($clients as $unClient) {?>
                 <option value='<?=$unClient->ID?>'>
-                    <?=$unClient->user_nicename?>
+                    <?=htmlspecialchars($unClient->user_nicename)?>
                 </option>
             <?php }?>
         </select>

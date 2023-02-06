@@ -11,7 +11,7 @@ if (isset($_POST['nb_client'])) {?>
     <br>
     <?php
 for ($i = 1; $i <= $_POST['nb_client']; $i++) {?>
-        <h3>Client n°<?=$i?></h3>
+        <h3>Client n°<?=htmlspecialchars($i)?></h3>
         <input type="hidden" name="nb_clients" value="<?=$_POST['nb_client']?>">
         <br>
         <label for="pseudo_client_n<?=$i?>">Pseudo/Login du client : </label>

@@ -4,7 +4,7 @@
 $coach = getUnCoach($idClub);?>
 <form action="https://cardio-training.eu/wp-admin/admin.php?page=gestionClub&option=gererCoach" method="POST">
     <p>
-        <strong>Coach : <?=$coach[0]->user_nicename?></strong><br><br>
+        <strong>Coach : <?=htmlspecialchars($coach[0]->user_nicename)?></strong><br><br>
         <input name="id_coach" type="hidden" value="<?=$coach[0]->ID?>">
         Pseuso : <input type='text' name='user_nicename' placeholder='User Login' value='<?=$coach[0]->user_nicename?>' required>
         Mail : <input type='text' name='user_email' placeholder='User Mail' value='<?=$coach[0]->user_email?>' required>

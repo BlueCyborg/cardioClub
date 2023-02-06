@@ -11,19 +11,31 @@ function creerClient($pseudoClient, $passwordClient, $emailClient, $idClub)
     //Affectation du client à son role de client adhérant au club
     $user_id_role->set_role('clientadherent');
     //Affectation du client à son club
-    return $wpdb->get_results("UPDATE `z00b_users` SET `id_club`='" . $idClub . "' WHERE `user_login`= '" . $pseudoClient . "' ");
+    $query = $wpdb->prepare(
+        "UPDATE `z00b_users` SET `id_club`= %d WHERE `user_login`= %s ",
+        array($idClub, $pseudoClient)
+    );
+    return $wpdb->get_results($query);
 }
 
 function getClientClub($idClub)
 {
     global $wpdb;
-    return $wpdb->get_results("SELECT `ID`,`user_nicename` FROM `z00b_users` WHERE `id_club` = " . $idClub . " ");
+    $query = $wpdb->prepare(
+        "SELECT `ID`,`user_nicename` FROM `z00b_users` WHERE `id_club` = %d ",
+        array($idClub)
+    );
+    return $wpdb->get_results($query);
 }
 
 function getUnClient($idClient)
 {
     global $wpdb;
-    return $wpdb->get_results("SELECT `user_nicename`,`user_email` FROM `z00b_users` WHERE `ID` = " . $idClient . " ");
+    $query = $wpdb->prepare(
+        "SELECT `user_nicename`,`user_email` FROM `z00b_users` WHERE `ID` = %d ",
+        array($idClient)
+    );
+    return $wpdb->get_results($query);
 }
 
 function updateUnClient($id_client, $pseudo, $mail)
@@ -40,7 +52,11 @@ function updateUnClient($id_client, $pseudo, $mail)
 function deleteClient($id_client)
 {
     global $wpdb;
-    $wpdb->get_results("UPDATE `z00b_users` SET `id_club`= NULL WHERE `ID` =  '" . $id_client . "' ");
+    $query = $wpdb->prepare(
+        "UPDATE `z00b_users` SET `id_club`= NULL WHERE `ID` = %d ",
+        array($id_client)
+    );
+    $wpdb->get_results($query);
     return wp_delete_user($id_client, 12);
 }
 
@@ -49,7 +65,11 @@ function deleteClient($id_client)
 function getClubReferent($idReferent)
 {
     global $wpdb;
-    return $wpdb->get_results("SELECT id, nom FROM `z00b_club` WHERE `id_referent`=" . $idReferent . " ");
+    $query = $wpdb->prepare(
+        "SELECT id, nom FROM `z00b_club` WHERE `id_referent`= %d ",
+        array($idReferent)
+    );
+    return $wpdb->get_results($query);
 }
 
 //COACH
@@ -63,14 +83,27 @@ function creerCoach($pseudoCoach, $passwordCoach, $emailCoach, $idClub)
     //Affectation du coach à son role de coach adhérant au club
     $user_id_role->set_role('coach');
     //Affectation du coach à son club
-    $wpdb->get_results("UPDATE `z00b_users` SET `id_club`= " . $idClub . " WHERE `ID` =  '" . $user_id . "' ");
-    return $wpdb->get_results("UPDATE `z00b_club` SET `id_coach`='" . $user_id . "' WHERE `id`= '" . $idClub . "' ");
+    $query = $wpdb->prepare(
+        "UPDATE `z00b_users` SET `id_club`= %d WHERE `ID` = %d ",
+        array($idClub, $user_id)
+    );
+    $wpdb->get_results($query);
+
+    $query = $wpdb->prepare(
+        "UPDATE `z00b_club` SET `id_coach`= %d WHERE `id`= %d ",
+        array($user_id, $idClub)
+    );
+    $wpdb->get_results($query);
 }
 
 function getUnCoach($idClub)
 {
     global $wpdb;
-    return $wpdb->get_results("SELECT `ID`, `user_nicename`, `user_email` FROM `z00b_users` WHERE `ID` =( SELECT id_coach FROM z00b_club WHERE id = " . $idClub . " );");
+    $query = $wpdb->prepare(
+        "SELECT `ID`, `user_nicename`, `user_email` FROM `z00b_users` WHERE `ID` =( SELECT id_coach FROM z00b_club WHERE id = %d );",
+        array($idClub)
+    );
+    return $wpdb->get_results($query);
 }
 
 function updateUnCoach($idCoach, $pseudoCoach, $emailCoach)
@@ -87,7 +120,18 @@ function updateUnCoach($idCoach, $pseudoCoach, $emailCoach)
 function deleteCoach($id_coach, $idClub)
 {
     global $wpdb;
-    $wpdb->get_results("UPDATE `z00b_users` SET `id_club` = NULL WHERE `z00b_users`.`ID` = '" . $id_coach . "';");
-    $wpdb->get_results("UPDATE `z00b_club` SET `id_coach`= NULL WHERE `id`= '" . $idClub . "' ");
+
+    $query = $wpdb->prepare(
+        "UPDATE `z00b_users` SET `id_club` = NULL WHERE `z00b_users`.`ID` = %d ",
+        array($id_coach)
+    );
+    $wpdb->get_results($query);
+
+    $query = $wpdb->prepare(
+        "UPDATE `z00b_club` SET `id_coach`= NULL WHERE `id`= %d ",
+        array($idClub)
+    );
+    $wpdb->get_results($query);
+
     return wp_delete_user($id_coach, 12);
 }

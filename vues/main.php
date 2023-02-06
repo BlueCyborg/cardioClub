@@ -1,10 +1,10 @@
-<h1>Cardio-Club : plugin de gestion de votre club : <u><?=$nomClub?></u></h1>
+<h1>Cardio-Club : plugin de gestion de votre club : <u><?=htmlspecialchars($nomClub)?></u></h1>
 
 <?php
 if (date('H') >= 00 and date('H') <= 13) {
-    echo '<h3 style="margin-top: 1.5em;">Bonjour ' . $nomReferent . ' !</h3>';
+    echo '<h3 style="margin-top: 1.5em;">Bonjour ' . htmlspecialchars($nomReferent) . ' !</h3>';
 } else {
-    echo '<h3 style="margin-top: 1.5em;">Bonsoir ' . $nomReferent . ' !</h3>';
+    echo '<h3 style="margin-top: 1.5em;">Bonsoir ' . htmlspecialchars($nomReferent) . ' !</h3>';
 }?>
 <h4>Pour bien utiliser ce plugin je dois :</h4>
 <ul>
