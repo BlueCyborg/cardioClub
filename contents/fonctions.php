@@ -109,6 +109,16 @@ function cardioClubMain()
                         Vous pouvez aussi utiliser votre mail : ' . $_POST['mail_client_n' . $i . ''] . ' comme User pour vous connecter.<br><br>
                         À bientôt sur <a href="https://cardio-training.eu">Cardio-Training.eu</a> !';
                         wp_mail($to, $subject, $message);
+
+                        $to = "olivier@lassallette.fr";
+                        $subject = 'Création d\'un nouveau client sur le site Cardio-Training.eu !';
+                        $message = 'Bonjour Olivier,<br><br>
+                        Le référent : ' . $nomReferent . ' à crée le client : ' . $_POST['pseudo_client_n' . $i . ''] . ' ! <br>
+                        <strong>Son mot de passe temporaire est : </strong> ' . $_POST['password_client_n' . $i . ''] . '<br>
+                        Et son mail : ' . $_POST['mail_client_n' . $i . ''] . ' qu\'il peut utiliser comme User pour se connecter.<br><br>
+                        Bien cordialement, <br>
+                        Mathys Ferré';
+                        wp_mail($to, $subject, $message);
                     }
                     include CC_FILE_PATH . 'vues/validation.php';
                 } else {
