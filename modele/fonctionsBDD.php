@@ -11,6 +11,11 @@ function creerClient($pseudoClient, $passwordClient, $emailClient, $idClub)
     //Affectation du client à son role de client adhérant au club
     $user_id_role->set_role('clientadherent');
     $user_id_role->add_role('paiementencours');
+    wp_update_user(
+    [
+        'ID' => $id_client,
+·       'dateAbonnement' => date("y.m.d"),
+    ]
     //Affectation du client à son club
     $query = $wpdb->prepare(
         "UPDATE `z00b_users` SET `id_club`= %d WHERE `user_login`= %s ",
