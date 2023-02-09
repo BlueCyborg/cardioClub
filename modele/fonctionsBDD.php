@@ -14,8 +14,9 @@ function creerClient($pseudoClient, $passwordClient, $emailClient, $idClub)
     wp_update_user(
     [
         'ID' => $id_client,
-·       'dateAbonnement' => date("y.m.d"),
+        'dateAbonnement' => date("y.m.d"),
     ]
+);
     //Affectation du client à son club
     $query = $wpdb->prepare(
         "UPDATE `z00b_users` SET `id_club`= %d WHERE `user_login`= %s ",
