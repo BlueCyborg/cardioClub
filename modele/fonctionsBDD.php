@@ -10,6 +10,7 @@ function creerClient($pseudoClient, $passwordClient, $emailClient, $idClub)
     $user_id_role = new WP_User($user_id);
     //Affectation du client à son role de client adhérant au club
     $user_id_role->set_role('clientadherent');
+    $user_id_role->add_role('paiementencours');
     //Affectation du client à son club
     $query = $wpdb->prepare(
         "UPDATE `z00b_users` SET `id_club`= %d WHERE `user_login`= %s ",
@@ -20,12 +21,13 @@ function creerClient($pseudoClient, $passwordClient, $emailClient, $idClub)
 
 function getClientClub($idClub)
 {
-    global $wpdb;
-    $query = $wpdb->prepare(
-        "SELECT `ID`,`user_nicename` FROM `z00b_users` WHERE `id_club` = %d ",
-        array($idClub)
+    $args = array(
+        'role' => 'clientadherent',
+        'id_club' => $idClub,
+        'orderby' => 'user_nicename',
+        'order' => 'ASC',
     );
-    return $wpdb->get_results($query);
+    return get_users($args);
 }
 
 function getUnClient($idClient)
